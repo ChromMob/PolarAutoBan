@@ -2,3 +2,5 @@ name: PolarAutoBan
 version: '${version}'
 main: me.chrommob.polarautoban.PolarAutoBan
 api-version: '1.18'
+depend:
+  - PolarLoader
