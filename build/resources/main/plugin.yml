@@ -1,0 +1,6 @@
+name: PolarAutoBan
+version: '1.0-SNAPSHOT'
+main: me.chrommob.polarautoban.PolarAutoBan
+api-version: '1.18'
+depend:
+  - PolarLoader
