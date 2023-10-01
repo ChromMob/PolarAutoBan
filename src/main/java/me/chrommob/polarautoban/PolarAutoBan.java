@@ -1,18 +1,10 @@
 package me.chrommob.polarautoban;
 
-import me.chrommob.polarautoban.action.ActionTaker;
+import me.chrommob.polarautoban.commands.ReloadCommand;
 import me.chrommob.polarautoban.config.*;
-import me.chrommob.polarautoban.events.CloudEvent;
-import me.chrommob.polarautoban.events.DetectionEvent;
 import me.chrommob.polarautoban.webhook.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
-import top.polar.api.PolarApi;
-import top.polar.api.PolarApiAccessor;
-import top.polar.api.exception.PolarNotLoadedException;
 import top.polar.api.loader.LoaderApi;
-import top.polar.api.user.event.CloudDetectionEvent;
-import top.polar.api.user.event.DetectionAlertEvent;
-import top.polar.api.user.event.MitigationEvent;
 import top.polar.api.user.event.type.CheckType;
 import top.polar.api.user.event.type.CloudCheckType;
 
@@ -21,9 +13,10 @@ import java.util.List;
 
 public final class PolarAutoBan extends JavaPlugin {
     private Sender sender;
+    private ConfigManager configManager;
     @Override
     public void onLoad() {
-        ConfigManager configManager = new ConfigManager(getDataFolder());
+        configManager = new ConfigManager(getDataFolder());
 
         List<ConfigKey> keys = new ArrayList<>();
         List<ConfigKey> webhookKeys = new ArrayList<>();
@@ -50,8 +43,6 @@ public final class PolarAutoBan extends JavaPlugin {
 
         sender.add("PolarAutoBan has been enabled!", "Server", true);
 
-        ActionTaker at = new ActionTaker(this, config);
-
         try {
             Class.forName("top.polar.api.loader.LoaderApi");
         } catch (ClassNotFoundException e) {
@@ -59,21 +50,10 @@ public final class PolarAutoBan extends JavaPlugin {
             return;
         }
 
-        LoaderApi.registerEnableCallback(() -> {
-            PolarApi api;
-            try {
-                api = PolarApiAccessor.access().get();
-            } catch (PolarNotLoadedException e) {
-                api = null;
-            }
-            if (api == null) {
-                return;
-            }
-            api.events().repository().registerListener(DetectionAlertEvent.class, new DetectionEvent(at));
-            api.events().repository().registerListener(MitigationEvent.class,
-                    new me.chrommob.polarautoban.events.MitigationEvent(at));
-            api.events().repository().registerListener(CloudDetectionEvent.class, new CloudEvent(at));
-        });
+        getCommand("polarautoban").setExecutor(new ReloadCommand(this));
+
+        PolarAutoBanHook hook = new PolarAutoBanHook(this);
+        LoaderApi.registerEnableCallback(hook::init);
     }
 
     @Override
@@ -89,5 +69,9 @@ public final class PolarAutoBan extends JavaPlugin {
 
     public Sender getSender() {
         return sender;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 }

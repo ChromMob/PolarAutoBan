@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 public class ConfigKey {
-    private final String key;
+    private String key;
     private Object value;
     private final Map<String, ConfigKey> children = new HashMap<>();
     public ConfigKey(String key, Object value) {
         this.key = key;
         if (value instanceof List<?> list) {
             this.value = null;
-            if (list.size() > 0) {
+            if (!list.isEmpty()) {
                 Object first = list.get(0);
                 if (first instanceof ConfigKey) {
                     list.forEach(child -> {
@@ -24,6 +24,16 @@ public class ConfigKey {
         } else {
             this.value = value;
         }
+    }
+
+    public ConfigKey clone(String newName) {
+        ConfigKey key = new ConfigKey(newName, value);
+        children.forEach((name, child) -> key.addChild(child.clone(name)));
+        return key;
+    }
+
+    public void addChild(ConfigKey child) {
+        children.put(child.get(), child);
     }
 
     public Map<String, ConfigKey> getChildren() {

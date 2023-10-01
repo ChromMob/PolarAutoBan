@@ -4,3 +4,14 @@ main: me.chrommob.polarautoban.PolarAutoBan
 api-version: '1.18'
 depend:
   - PolarLoader
+permissions:
+  polarautoban.reload:
+      description: PolarAutoBan reload permission
+      default: op
+commands:
+  polarautoban:
+    description: PolarAutoBan reload command
+    usage: /<command> reload
+    permission: polarautoban.reload
+
+

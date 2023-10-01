@@ -1,17 +1,28 @@
 package me.chrommob.polarautoban.config;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ConfigWrapper {
     private final String name;
-    private final Map<String, ConfigKey> keys = new HashMap<>();
+    private final Map<String, ConfigKey> keys = new LinkedHashMap<>();
 
     public ConfigWrapper(String name, List<ConfigKey> keys) {
         this.name = name;
-        keys.forEach(key -> this.keys.put(key.get(), key));
+        keys.forEach(key -> {
+            if (this.keys.containsKey(key.get())) {
+                int numberOfSameKeys = 0;
+                for (String keyName : this.keys.keySet()) {
+                    if (keyName.equals(key.get())) {
+                        numberOfSameKeys++;
+                    }
+                }
+                String keyName = key.get() + "_" + numberOfSameKeys;
+                this.keys.put(keyName, key.clone(keyName));
+            } else
+                this.keys.put(key.get(), key);
+        });
     }
 
     public String getName() {
@@ -40,12 +51,12 @@ public class ConfigWrapper {
     private Map<String, Object> read(ConfigKey key) {
         Map<String, Object> config = new LinkedHashMap<>();
         Object value;
-        if (key.getChildren().size() > 0) {
+        if (!key.getChildren().isEmpty()) {
             value = new LinkedHashMap<>();
             key.getChildren().forEach((name, child) -> {
                 Map<String, Object> childConfig = read(child);
-                if (childConfig.size() > 0) {
-                    ((Map<String, Object>) value).put((String) childConfig.keySet().toArray()[0], childConfig.values().toArray()[0]);
+                if (!childConfig.isEmpty()) {
+                    childConfig.forEach((childName, childValue) -> ((Map<String, Object>) value).put(childName, childValue));
                 }
             });
         } else {

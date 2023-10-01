@@ -84,4 +84,9 @@ public class ConfigManager {
             e.printStackTrace();
         }
     }
+
+    public void reloadConfig(String name) {
+        saveConfig(name);
+        loadConfig(name);
+    }
 }

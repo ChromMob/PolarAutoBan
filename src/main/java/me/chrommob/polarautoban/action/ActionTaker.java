@@ -28,7 +28,7 @@ public class ActionTaker {
         if (checkData == null) {
             return;
         }
-        if (vl < checkData.punishVL) {
+        if (!checkData.enabled || vl < checkData.punishVL) {
             return;
         }
         String command = checkData.punishCommand
