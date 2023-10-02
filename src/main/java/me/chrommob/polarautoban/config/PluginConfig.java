@@ -2,6 +2,7 @@ package me.chrommob.polarautoban.config;
 
 import top.polar.api.user.event.type.CheckType;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 public class PluginConfig extends ConfigWrapper {
@@ -28,5 +29,6 @@ public class PluginConfig extends ConfigWrapper {
             return null;
         }
         return new CheckData(checkData);
+        URLEncoder.encode("test", "UTF-8")
     }
 }

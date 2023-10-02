@@ -21,5 +21,6 @@ public class Test {
         ConfigWrapper cw = new ConfigWrapper("test", keys);
         cm.addConfig(cw);
         System.out.println(cm.getConfigWrapper("test").getKey("test").getAsString());
+
     }
 }

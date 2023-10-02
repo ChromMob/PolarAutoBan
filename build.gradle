@@ -26,6 +26,7 @@ dependencies {
     compileOnly "top.polar:api:2.0.0"
 
     testImplementation 'org.yaml:snakeyaml:2.2'
+    testCompileOnly 'top.polar:api:2.0.0'
 }
 
 def targetJavaVersion = 17
