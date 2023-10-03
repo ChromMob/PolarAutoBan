@@ -38,28 +38,25 @@ public final class PolarAutoBan extends JavaPlugin {
         PluginConfig config = new PluginConfig("config", keys);
         configManager.addConfig(config);
 
-        sender = new Sender(configManager);
-        sender.load();
-
-        sender.add("PolarAutoBan has been enabled!", "Server", true);
-
         try {
             Class.forName("top.polar.api.loader.LoaderApi");
         } catch (ClassNotFoundException e) {
             sender.add("Polar is not loaded!", "Server", true);
             return;
         }
-
-        getCommand("polarautoban").setExecutor(new ReloadCommand(this));
-
         PolarAutoBanHook hook = new PolarAutoBanHook(this);
         LoaderApi.registerEnableCallback(hook::init);
     }
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        this.getCommand("polarautoban").setExecutor(new ReloadCommand(this));
 
+        // Plugin startup logic
+        sender = new Sender(configManager);
+        sender.load();
+
+        sender.add("PolarAutoBan has been enabled!", "Server", true);
     }
 
     @Override

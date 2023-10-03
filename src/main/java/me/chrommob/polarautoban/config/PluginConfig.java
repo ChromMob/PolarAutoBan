@@ -14,7 +14,7 @@ public class PluginConfig extends ConfigWrapper {
     public boolean isWebhookEnabled() {
         ConfigKey webhook = getKey("webhook");
         ConfigKey enabled = webhook.getKey("enabled");
-        return enabled.getAsType(Boolean.class);
+        return enabled.getAsBoolean();
     }
 
     public String getWebhookUrl() {
@@ -29,6 +29,5 @@ public class PluginConfig extends ConfigWrapper {
             return null;
         }
         return new CheckData(checkData);
-        URLEncoder.encode("test", "UTF-8")
     }
 }

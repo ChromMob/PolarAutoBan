@@ -25,7 +25,6 @@ public class ActionTaker {
     public void takeAction(String type, String playerName) {
         int vl = getVL(type, playerName);
         CheckData checkData = config.getCheckData(type);
-        System.out.println("vl: " + vl + ", punishVL: " + (checkData == null ? "null" : checkData.punishVL) + ", enabled: " + (checkData == null ? "null" : checkData.enabled));
         if (checkData == null) {
             return;
         }

@@ -86,7 +86,6 @@ public class ConfigManager {
     }
 
     public void reloadConfig(String name) {
-        saveConfig(name);
         loadConfig(name);
     }
 }

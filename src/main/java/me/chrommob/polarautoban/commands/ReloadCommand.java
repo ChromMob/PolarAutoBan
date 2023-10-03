@@ -32,6 +32,7 @@ public class ReloadCommand implements CommandExecutor {
         polarAutoBan.getSender().add("Reloading config...", "Server", true);
         sender.sendMessage("§aReloading config...");
         polarAutoBan.getConfigManager().reloadConfig("config");
+        polarAutoBan.getSender().load();
 
         sender.sendMessage("§aConfig reloaded!");
         return true;

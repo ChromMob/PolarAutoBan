@@ -1,6 +1,7 @@
 package me.chrommob.polarautoban.config;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,14 +47,16 @@ public class ConfigKey {
 
     public void setValue(Object value) {
         if (value instanceof List<?> list) {
-            if (list.size() > 0) {
-                Object first = list.get(0);
-                if (first instanceof ConfigKey) {
-                    list.forEach(child -> {
-                        ConfigKey configKey = (ConfigKey) child;
-                        children.put(configKey.get(), configKey);
-                    });
-                }
+            if (!list.isEmpty()) {
+                list.forEach(child -> {
+                    Map<String, Object> data = (Map<String, Object>) child;
+                    for (String key : data.keySet()) {
+                        ConfigKey configKey = children.get(key);
+                        if (configKey != null) {
+                            configKey.setValue(data.get(key));
+                        }
+                    }
+                });
             }
         } else {
             this.value = value;
@@ -107,5 +110,15 @@ public class ConfigKey {
 
     public <T> T getAsType(Class<T> type) throws ClassCastException {
         return type.cast(value);
+    }
+
+    public boolean getAsBoolean() {
+        if (value instanceof Boolean) {
+            return (boolean) value;
+        }
+        if (value instanceof String) {
+            return Boolean.parseBoolean((String) value);
+        }
+        throw new ClassCastException("Cannot cast " + value.getClass().getName() + " to boolean");
     }
 }
