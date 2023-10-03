@@ -55,7 +55,6 @@ public class ConfigKey {
                 }
             });
         } else {
-            System.out.println("Setting " + key + " to " + value);
             this.value = value;
         }
     }
