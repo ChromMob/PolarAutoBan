@@ -46,19 +46,16 @@ public class ConfigKey {
     }
 
     public void setValue(Object value) {
-        if (value instanceof List<?> list) {
-            if (!list.isEmpty()) {
-                list.forEach(child -> {
-                    Map<String, Object> data = (Map<String, Object>) child;
-                    for (String key : data.keySet()) {
-                        ConfigKey configKey = children.get(key);
-                        if (configKey != null) {
-                            configKey.setValue(data.get(key));
-                        }
-                    }
-                });
-            }
+        if (value instanceof Map) {
+            Map<String, Object> map = (Map<String, Object>) value;
+            map.forEach((name, childValue) -> {
+                ConfigKey child = children.get(name);
+                if (child != null) {
+                    child.setValue(childValue);
+                }
+            });
         } else {
+            System.out.println("Setting " + key + " to " + value);
             this.value = value;
         }
     }
