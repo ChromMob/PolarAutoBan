@@ -1,6 +1,7 @@
 package me.chrommob.polarautoban;
 
-import me.chrommob.polarautoban.commands.ReloadCommand;
+import me.chrommob.polarautoban.action.ActionTaker;
+import me.chrommob.polarautoban.commands.Commands;
 import me.chrommob.polarautoban.config.*;
 import me.chrommob.polarautoban.webhook.Sender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,6 +15,7 @@ import java.util.List;
 public final class PolarAutoBan extends JavaPlugin {
     private Sender sender;
     private ConfigManager configManager;
+    private ActionTaker ac;
     @Override
     public void onLoad() {
         configManager = new ConfigManager(getDataFolder());
@@ -50,7 +52,7 @@ public final class PolarAutoBan extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.getCommand("polarautoban").setExecutor(new ReloadCommand(this));
+        this.getCommand("polarautoban").setExecutor(new Commands(this));
 
         // Plugin startup logic
         sender = new Sender(configManager);
@@ -70,5 +72,13 @@ public final class PolarAutoBan extends JavaPlugin {
 
     public ConfigManager getConfigManager() {
         return configManager;
+    }
+
+    public ActionTaker getAc() {
+        return ac;
+    }
+
+    public void setAc(ActionTaker ac) {
+        this.ac = ac;
     }
 }

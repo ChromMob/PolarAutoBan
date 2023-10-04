@@ -8,10 +8,13 @@ permissions:
   polarautoban.reload:
       description: PolarAutoBan reload permission
       default: op
+  polarautoban.test:
+    description: PolarAutoBan test permission
+    default: op
 commands:
   polarautoban:
-    description: PolarAutoBan reload command
-    usage: /<command> reload
+    description: PolarAutoBan commands
+    usage: /<command> <arg>
     permission: polarautoban.reload
 
 

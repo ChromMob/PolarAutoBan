@@ -1,8 +1,5 @@
 package me.chrommob.polarautoban.config;
 
-import top.polar.api.user.event.type.CheckType;
-
-import java.net.URLEncoder;
 import java.util.List;
 
 public class PluginConfig extends ConfigWrapper {
@@ -24,7 +21,8 @@ public class PluginConfig extends ConfigWrapper {
     }
 
     public CheckData getCheckData(String check) {
-        ConfigKey checkData = getKey(check);
+        ConfigKey allChecks = getKey("checks");
+        ConfigKey checkData = allChecks.getKey(check);
         if (checkData == null) {
             return null;
         }

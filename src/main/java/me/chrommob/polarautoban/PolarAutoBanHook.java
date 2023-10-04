@@ -12,12 +12,11 @@ import top.polar.api.user.event.DetectionAlertEvent;
 import top.polar.api.user.event.MitigationEvent;
 
 public class PolarAutoBanHook {
-    private final PolarAutoBan plugin;
     private final ActionTaker at;
     public PolarAutoBanHook(PolarAutoBan plugin) {
-        this.plugin = plugin;
         PluginConfig config = plugin.getConfigManager().getConfigWrapper("config");
         at = new ActionTaker(plugin, config);
+        plugin.setAc(at);
     }
 
     public void init() {

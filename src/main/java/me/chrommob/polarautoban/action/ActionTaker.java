@@ -23,11 +23,11 @@ public class ActionTaker {
     private final Map<String, Map<String, Long>> lastAlert = new HashMap<>();
 
     public void takeAction(String type, String playerName) {
-        int vl = getVL(type, playerName);
         CheckData checkData = config.getCheckData(type);
         if (checkData == null) {
             return;
         }
+        int vl = getVL(type, playerName);
         if (!checkData.enabled || vl < checkData.punishVL) {
             return;
         }
@@ -58,7 +58,7 @@ public class ActionTaker {
         long lastAlert = playerLastAlert.getOrDefault(type, 0L);
         CheckData checkData = config.getCheckData(type);
         long decay = checkData.decaySeconds * 1000L;
-        if (lastAlert + decay > System.currentTimeMillis()) {
+        if (lastAlert + decay < System.currentTimeMillis()) {
             vl = 0;
         }
         playerLastAlert.put(type, System.currentTimeMillis());
