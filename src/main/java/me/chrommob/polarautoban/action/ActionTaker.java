@@ -35,7 +35,9 @@ public class ActionTaker {
                 .replace("%player%", playerName)
                 .replace("%check%", type)
                 .replace("%vl%", String.valueOf(vl));
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+        Bukkit.getScheduler().runTask(PolarAutoBan.getPlugin(PolarAutoBan.class), () -> {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+        });
         String alertMessage = checkData.alertMessage
                 .replace("%player%", playerName)
                 .replace("%check%", type)
