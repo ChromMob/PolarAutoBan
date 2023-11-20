@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ChromSurvival.PolarAutoBan.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ChromSurvival.PolarAutoBan.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/PolarAutoBan.main.iml" filepath="$PROJECT_DIR$/.idea/modules/PolarAutoBan.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/me.chrommob.PolarAutoBan.main.iml" filepath="$PROJECT_DIR$/.idea/modules/me.chrommob.PolarAutoBan.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/me.chrommob.PolarAutoBan.test.iml" filepath="$PROJECT_DIR$/.idea/modules/me.chrommob.PolarAutoBan.test.iml" />
     </modules>
   </component>
 </project>

@@ -8,6 +8,10 @@ public class PluginConfig extends ConfigWrapper {
         super(name, keys);
     }
 
+    public boolean isDebug() {
+        return getKey("debug").getAsBoolean();
+    }
+
     public boolean isWebhookEnabled() {
         ConfigKey webhook = getKey("webhook");
         ConfigKey enabled = webhook.getKey("enabled");

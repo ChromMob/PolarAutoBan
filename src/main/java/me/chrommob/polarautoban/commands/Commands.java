@@ -32,7 +32,6 @@ public class Commands implements CommandExecutor {
         }
 
         if (args.length == 1) {
-            polarAutoBan.getSender().add("Reloading config...", "Server", true);
             sender.sendMessage("§aReloading config...");
             polarAutoBan.getConfigManager().reloadConfig("config");
             polarAutoBan.getSender().load();

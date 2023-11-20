@@ -11,6 +11,9 @@ permissions:
   polarautoban.test:
     description: PolarAutoBan test permission
     default: op
+  polarautoban.alert:
+    description: PolarAutoBan alert permission
+    default: op
 commands:
   polarautoban:
     description: PolarAutoBan commands

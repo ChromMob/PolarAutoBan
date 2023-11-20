@@ -30,8 +30,6 @@ public class PolarAutoBanHook {
             return;
         }
         api.events().repository().registerListener(DetectionAlertEvent.class, new DetectionEvent(at));
-        api.events().repository().registerListener(MitigationEvent.class,
-                new me.chrommob.polarautoban.events.MitigationEvent(at));
         api.events().repository().registerListener(CloudDetectionEvent.class, new CloudEvent(at));
     }
 }

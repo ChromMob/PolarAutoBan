@@ -4,6 +4,7 @@ import me.chrommob.polarautoban.action.ActionTaker;
 import me.chrommob.polarautoban.commands.Commands;
 import me.chrommob.polarautoban.config.*;
 import me.chrommob.polarautoban.webhook.Sender;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.polar.api.loader.LoaderApi;
 import top.polar.api.user.event.type.CheckType;
@@ -16,11 +17,16 @@ public final class PolarAutoBan extends JavaPlugin {
     private Sender sender;
     private ConfigManager configManager;
     private ActionTaker ac;
+    private MiniMessage miniMessage;
     @Override
     public void onLoad() {
+        miniMessage = MiniMessage.miniMessage();
         configManager = new ConfigManager(getDataFolder());
 
         List<ConfigKey> keys = new ArrayList<>();
+
+        keys.add(new ConfigKey("debug", false));
+
         List<ConfigKey> webhookKeys = new ArrayList<>();
         webhookKeys.add(new ConfigKey("enabled", true));
         webhookKeys.add(new ConfigKey("url", "https://discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz"));
@@ -43,7 +49,6 @@ public final class PolarAutoBan extends JavaPlugin {
         try {
             Class.forName("top.polar.api.loader.LoaderApi");
         } catch (ClassNotFoundException e) {
-            sender.add("Polar is not loaded!", "Server", true);
             return;
         }
         PolarAutoBanHook hook = new PolarAutoBanHook(this);
@@ -57,8 +62,6 @@ public final class PolarAutoBan extends JavaPlugin {
         // Plugin startup logic
         sender = new Sender(configManager);
         sender.load();
-
-        sender.add("PolarAutoBan has been enabled!", "Server", true);
     }
 
     @Override

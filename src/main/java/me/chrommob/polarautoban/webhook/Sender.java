@@ -42,6 +42,7 @@ public class Sender {
     private final Map<String, Long> playerLastMessage = new HashMap<>();
     public void add(String message, String username, boolean priority) {
         if (!enabled) return;
+        message = "{\"content\":\"" + message + "\"}";
         if (priority) {
             priorityMessages.add(new WebHookMessage(message, username));
         } else {
